@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GreenThumb.Models
 {
     internal class PlantModel
     {
+        [Key]
         [Column("id")]
         public int PlantId { get; set; }
         [Column("name")]

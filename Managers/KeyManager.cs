@@ -7,7 +7,7 @@ namespace GreenThumb.Managers
     {
         public static string getEncryptionKey()
         {
-            string keyLocation = "C:\\Users\\tobbe\\OneDrive\\Skrivbord\\Key.txt";
+            string keyLocation = "C:\\Users\\tobia\\Skrivbord\\Key.txt";
             string key;
             if (File.Exists(keyLocation))
             {

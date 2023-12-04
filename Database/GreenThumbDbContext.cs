@@ -18,7 +18,7 @@ namespace GreenThumb.Database
         public DbSet<GardenModel> Gardens { get; set; }
         public DbSet<PlantModel> Plants { get; set; }
         public DbSet<InstructionModel> Instructions { get; set; }
-        public DbSet<GardenModel> GardenModel { get; set; }
+        public DbSet<GardenPlant> GardenPlant { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -31,8 +31,43 @@ namespace GreenThumb.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            //Set encryption provider
+            //Set Encryption provider
             modelBuilder.UseEncryption(_provider);
+
+            //Set Relations
+            modelBuilder.Entity<GardenModel>()
+                .HasMany(g => g.Plants)
+                .WithMany(p => p.Gardens)
+                .UsingEntity<GardenPlant>(
+                gp => gp.HasOne(g => g.Plant).WithMany().HasForeignKey(gp => gp.PlantId),
+                gp => gp.HasOne(g => g.Garden).WithMany().HasForeignKey(gp => gp.GardenId),
+                gp =>
+                {
+                    gp.HasKey(gp => new { gp.GardenId, gp.PlantId });
+                    gp.Property(gp => gp.Quanity).IsRequired();
+                }
+
+                );
+
+            //modelBuilder.Entity<PlantModel>()
+            //    .HasMany(p => p.Gardens)
+            //    .WithMany(g => g.Plants)
+            //    .UsingEntity<GardenPlant>(
+            //    gp => gp.HasOne(g => g.Garden).WithMany().HasForeignKey(gp => gp.GardenId),
+            //    gp => gp.HasOne(g => g.Plant).WithMany().HasForeignKey(gp => gp.PlantId),
+            //    gp =>
+            //    {
+            //        gp.HasKey(gp => new { gp.GardenId, gp.PlantId });
+            //        gp.Property(gp => gp.Quanity).IsRequired();
+            //    }
+
+            //);
+
+            modelBuilder.Entity<PlantModel>()
+                .HasMany(plant => plant.Instructions)
+                .WithOne(ins => ins.Plant)
+                .HasForeignKey(ins => ins.PlantId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             //SEED DATA
