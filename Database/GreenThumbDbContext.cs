@@ -49,19 +49,11 @@ namespace GreenThumb.Database
 
                 );
 
-            //modelBuilder.Entity<PlantModel>()
-            //    .HasMany(p => p.Gardens)
-            //    .WithMany(g => g.Plants)
-            //    .UsingEntity<GardenPlant>(
-            //    gp => gp.HasOne(g => g.Garden).WithMany().HasForeignKey(gp => gp.GardenId),
-            //    gp => gp.HasOne(g => g.Plant).WithMany().HasForeignKey(gp => gp.PlantId),
-            //    gp =>
-            //    {
-            //        gp.HasKey(gp => new { gp.GardenId, gp.PlantId });
-            //        gp.Property(gp => gp.Quanity).IsRequired();
-            //    }
+            modelBuilder.Entity<UserModel>()
+                .HasOne(g => g.Garden)
+                .WithOne(u => u.User)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            //);
 
             modelBuilder.Entity<PlantModel>()
                 .HasMany(plant => plant.Instructions)

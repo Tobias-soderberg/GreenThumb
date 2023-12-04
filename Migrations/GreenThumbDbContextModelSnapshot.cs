@@ -30,7 +30,14 @@ namespace GreenThumb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GardenId"), 1L, 1);
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
                     b.HasKey("GardenId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Gardens");
                 });
@@ -113,10 +120,6 @@ namespace GreenThumb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
-                    b.Property<int>("GardenId")
-                        .HasColumnType("int")
-                        .HasColumnName("garden_id");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -129,9 +132,18 @@ namespace GreenThumb.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("GardenId");
-
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("GreenThumb.Models.GardenModel", b =>
+                {
+                    b.HasOne("GreenThumb.Models.UserModel", "User")
+                        .WithOne("Garden")
+                        .HasForeignKey("GreenThumb.Models.GardenModel", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GreenThumb.Models.GardenPlant", b =>
@@ -164,20 +176,15 @@ namespace GreenThumb.Migrations
                     b.Navigation("Plant");
                 });
 
-            modelBuilder.Entity("GreenThumb.Models.UserModel", b =>
-                {
-                    b.HasOne("GreenThumb.Models.GardenModel", "Garden")
-                        .WithMany()
-                        .HasForeignKey("GardenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Garden");
-                });
-
             modelBuilder.Entity("GreenThumb.Models.PlantModel", b =>
                 {
                     b.Navigation("Instructions");
+                });
+
+            modelBuilder.Entity("GreenThumb.Models.UserModel", b =>
+                {
+                    b.Navigation("Garden")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
