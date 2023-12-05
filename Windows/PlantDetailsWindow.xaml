@@ -5,8 +5,266 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GreenThumb.Windows"
         mc:Ignorable="d"
-        Title="PlantDetailsWindow" Height="450" Width="800">
+        Title="PlantDetailsWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF162C3A"/>
+                <GradientStop Color="#FF98A3A9" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="2*"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Column="3"
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            Content="Green Thumb"
+            Foreground="#FF00794F"
+            FontSize="40"
+            FontWeight="Bold"
+            />
+
+        <Label
+            Grid.Column="2"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            Content="Plant Name"
+            Foreground="LightGoldenrodYellow"
+            FontSize="16"
+            VerticalAlignment="Top"
+
+            FontWeight="Bold"
+            />
+        <Label
+            Grid.Column="5"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Content="Instructions"
+            HorizontalAlignment="Center"
+            FontSize="30"
+            FontWeight="Bold"
+            Foreground="LightGoldenrodYellow"
+            VerticalAlignment="Center"
+            />
+        <Label
+            Grid.Column="2"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Content="Description"
+            Foreground="LightGoldenrodYellow"
+            FontSize="16"
+            FontWeight="Bold"
+            VerticalAlignment="Top"
+            Padding="0"
+            HorizontalAlignment="Center"
+            />
+
+        <Label
+            Name="lblInstruction"
+            Grid.Column="5"
+            Grid.Row="4"
+            Content="Instruction"
+            FontWeight="Bold"
+            FontSize="16"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Foreground="LightGoldenrodYellow"
+            Padding="0 3 0 0"
+            Visibility="Hidden"
+            />
+        <TextBox
+            Name="txtInstruction"
+            Grid.Column="5"
+            Grid.Row="4"
+            Margin="0 30 0 0"
+            Background="LightGoldenrodYellow"
+            VerticalScrollBarVisibility="Auto"
+            TextWrapping="Wrap"
+            Visibility="Hidden"
+            />
+
+        <TextBox
+            Name="txtPlantName"
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Height="30"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="10"
+            Background="LightGoldenrodYellow"
+            />
+        <TextBox
+            Name="txtDescription"
+            Grid.Column="2"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="0 30 0 0"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto"
+            Background="LightGoldenrodYellow"
+            />
+
+        <ListView
+            Name="lstInstructions"
+            Grid.Column="5"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Background="LightGoldenrodYellow"
+            
+            />
+        <Button
+            Name="btnRemoveInstruction"
+            Grid.Column="6"
+            Grid.Row="4"
+            Margin="10 0"
+            Height="30"
+            VerticalAlignment="Bottom"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Remove"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnRemoveInstruction_Click"
+            Visibility="Hidden"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         
+        <Button
+            Name="btnAddInstruction"
+            Grid.Column="6"
+            Grid.Row="4"
+            Margin="10,4"
+            Height="30"
+            VerticalAlignment="Top"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Add"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnAddInstruction_Click"
+            Visibility="Hidden"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
+        <Button
+            Name="btnAddToGarden"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Add To Garden"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnAddToGarden_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button
+            Name="btnEditPlant"
+            Grid.Column="5"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Edit Plant"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnEditPlant_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button
+            Name="btnUpdate"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Update"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold"
+            Visibility="Hidden"
+            Click="btnUpdate_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button
+            Name="btnBack"
+            Grid.Column="7"
+            Grid.ColumnSpan="1"
+            Grid.Row="1"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Go Back"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnBack_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
     </Grid>
 </Window>

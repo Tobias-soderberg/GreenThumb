@@ -63,36 +63,7 @@ namespace GreenThumb.Database
 
 
             //SEED DATA
-            //modelBuilder.Entity<PlantModel>()
-            //    .HasData(
-            //    new PlantModel()
-            //    {
-            //        PlantId = 1,
-            //        Name = "Red Rose",
-            //        Description = "A red flower",
-            //        Instructions = new List<InstructionModel>()
-            //        {
-            //            new InstructionModel()
-            //            {
-            //                InstructionId = 1,
-            //                InstructionText = "Water Rose everyday",
-            //                PlantId = 1
-            //            },
-            //            new InstructionModel()
-            //            {
-            //                InstructionId = 2,
-            //                InstructionText = "Be careful of the thorns",
-            //                PlantId = 1
-            //            },
-            //            new InstructionModel()
-            //            {
-            //                InstructionId = 3,
-            //                InstructionText = "Give to someone special",
-            //                PlantId = 1
-            //            },
-            //        }
-            //    }
-            //    );
+
         }
     }
 }

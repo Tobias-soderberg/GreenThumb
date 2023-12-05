@@ -80,6 +80,15 @@ public partial class PlantWindow : Window
 
     private void btnDetails_Click(object sender, RoutedEventArgs e)
     {
-
+        ListViewItem selectedItem = (ListViewItem)lstPlants.SelectedItem;
+        if (selectedItem == null)
+        {
+            MessageBox.Show("No plant selected!");
+            return;
+        }
+        PlantModel plant = (PlantModel)selectedItem.Tag;
+        PlantDetailsWindow plantDetailsWindow = new(plant.PlantId);
+        plantDetailsWindow.Show();
+        Close();
     }
 }

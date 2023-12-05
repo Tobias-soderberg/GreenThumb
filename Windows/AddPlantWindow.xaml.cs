@@ -46,9 +46,17 @@ namespace GreenThumb.Windows
             string plantDescription = txtDescription.Text.Trim();
             using (GreenThumbDbContext context = new())
             {
+
                 try
                 {
                     GreenThumbRepository<PlantModel> plantRepo = new(context);
+
+                    if (plantRepo.GetAll().FirstOrDefault(p => p.Name.ToLower() == plantName.ToLower()) != null)
+                    {
+                        MessageBox.Show("Plant already exists!");
+                        return;
+                    }
+
                     PlantModel newPlant = new PlantModel()
                     {
                         Name = plantName,
