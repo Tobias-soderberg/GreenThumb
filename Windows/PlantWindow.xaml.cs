@@ -39,7 +39,7 @@ public partial class PlantWindow : Window
                 {
                     ListViewItem item = new ListViewItem();
                     item.Tag = plant;
-                    item.Content = plant.Name + " " + plant.Description;
+                    item.Content = plant.Name;
                     lstPlants.Items.Add(item);
                 }
             }

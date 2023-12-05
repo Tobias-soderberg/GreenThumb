@@ -68,18 +68,24 @@
             Background="LightGoldenrodYellow" TextChanged="txtSearch_TextChanged"
             
         />
-        
+
         <ListView
             Name="lstPlants"
             Grid.Column="2"
             Grid.ColumnSpan="2"
             Grid.Row="3"
+            Width="200"
             Background="Transparent"
             BorderBrush="#FF00794F"
             BorderThickness="2"
             Foreground="LightGoldenrodYellow"
-            
-        />
+            >
+            <ListView.ItemContainerStyle> <!--sets the column text to center-->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
 
         <Button
             Name="btnAddPlant"
