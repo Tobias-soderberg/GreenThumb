@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GreenThumb.Windows"
         mc:Ignorable="d"
-        Title="MyGardenWindow" Height="450" Width="800">
+        Title="MyGardenWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Assets/Garden2.jpg" Stretch="UniformToFill"/>
@@ -41,7 +41,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="5"
             Grid.RowSpan="4"
-            Background="White"
+            Background="Transparent"
             >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
