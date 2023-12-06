@@ -18,15 +18,22 @@ internal class GreenThumbRepository<T> where T : class
         return _dbSet.ToList();
     }
 
-    public List<T>? GetAllInclude(string tableName)
+    public List<T>? GetAllInclude(params string[] navigationProperties)
     {
         try
         {
-            return _dbSet.Include(tableName).ToList();
+            IQueryable<T> query = _dbSet;   //Set to Queryable to build onto the LINQ method so it will be include().include().... until all sent in are included
+                                            //Almost as a string builder if I understand correct
+
+            foreach (var navigationProperty in navigationProperties)
+            {
+                query = query.Include(navigationProperty); // Build the query
+            }
+            return query.ToList(); //Execute and make it to a list
         }
         catch
         {
-            MessageBox.Show("Cant include that table!");
+            MessageBox.Show("Can't include one or more tables!");
             return null;
         }
 
