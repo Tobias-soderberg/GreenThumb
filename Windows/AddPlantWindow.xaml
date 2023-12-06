@@ -8,10 +8,7 @@
         Title="AddPlantWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF162C3A"/>
-                <GradientStop Color="#FF98A3A9" Offset="1"/>
-            </LinearGradientBrush>
+            <ImageBrush ImageSource="/Assets/Flower1.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
         <Grid.ColumnDefinitions>
@@ -41,7 +38,7 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center"
             Content="Green Thumb"
-            Foreground="#FF00794F"
+            Foreground="SaddleBrown"
             FontSize="40"
             FontWeight="Bold"
             />  

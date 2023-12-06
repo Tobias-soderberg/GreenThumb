@@ -7,19 +7,19 @@ namespace GreenThumb.Managers;
 
 internal static class UserManager
 {
-    public static int currentUserId;
+    public static UserModel? currentUser;
 
     internal static bool ValidateLogin(string username, string password)
     {
         using (GreenThumbDbContext context = new())
         {
             GreenThumbRepository<UserModel> userRepo = new(context);
-            UserModel? userToLogin = userRepo.GetAll().FirstOrDefault(u => u.Username == username);
+            UserModel? userToLogin = userRepo.GetAllInclude("Garden").FirstOrDefault(u => u.Username == username);
             if (userToLogin != null)
             {
                 if (userToLogin.Password == password)
                 {
-                    currentUserId = userToLogin.UserId;
+                    currentUser = userToLogin;
                     return true;
                 }
             }

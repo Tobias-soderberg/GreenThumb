@@ -61,7 +61,10 @@ namespace GreenThumb.Database
                 .HasForeignKey(ins => ins.PlantId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
+            modelBuilder.Entity<UserModel>()
+                .HasOne(e => e.Garden)
+                .WithOne(e => e.User)
+                .HasForeignKey<GardenModel>(g => g.UserId);
             //SEED DATA
 
         }

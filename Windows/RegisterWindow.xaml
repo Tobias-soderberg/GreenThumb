@@ -8,10 +8,7 @@
         Title="RegisterWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF162C3A"/>
-                <GradientStop Color="#FF5BBF8A" Offset="1"/>
-            </LinearGradientBrush>
+            <ImageBrush ImageSource="/Assets/Garden1.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -32,7 +29,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Border 
-            Background="#FF00794F" 
+            Background="Transparent" 
             Grid.Column="1"
             Grid.ColumnSpan="2"
             Grid.Row="1"
@@ -50,7 +47,7 @@
             FontSize="40"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Foreground="#FF00794F"
+            Foreground="SaddleBrown"
         />
         <Label 
             Grid.Row="1"

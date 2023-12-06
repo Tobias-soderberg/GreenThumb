@@ -25,6 +25,7 @@ namespace GreenThumb.Windows
             }
             ListViewItem item = new ListViewItem();
             item.Content = instruction;
+
             lstInstructions.Items.Add(item);
 
             txtInstruction.Text = string.Empty;
@@ -32,6 +33,11 @@ namespace GreenThumb.Windows
 
         private void btnRemoveInstruction_Click(object sender, RoutedEventArgs e)
         {
+            if (lstInstructions.SelectedItem == null)
+            {
+                MessageBox.Show("No instruction selected!");
+                return;
+            }
             lstInstructions.Items.Remove(lstInstructions.SelectedItem);
         }
 
@@ -76,11 +82,8 @@ namespace GreenThumb.Windows
                         newPlant.Instructions.Add(newInstruction);
                     }
                     plantRepo.Complete();
-                    ClearInputs();
                     MessageBox.Show($"{newPlant.Name} added successfully!");
-                    PlantWindow plantWindow = new PlantWindow();
-                    plantWindow.Show();
-                    Close();
+                    ClearInputs();
                 }
                 catch
                 {

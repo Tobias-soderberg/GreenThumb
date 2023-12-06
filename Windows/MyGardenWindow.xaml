@@ -7,6 +7,79 @@
         mc:Ignorable="d"
         Title="MyGardenWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Garden2.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+
+        <Grid
+            Name="gridGarden"
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="5"
+            Grid.RowSpan="4"
+            Background="White"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Button
+            Name="btnBack"
+            Grid.Column="7"
+            Grid.ColumnSpan="3"
+            Grid.Row="6"
+            Margin="10,4"
+            Height="30"
+            VerticalAlignment="Center"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Back"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold"
+            Visibility="Visible" Click="btnBack_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
         
     </Grid>
 </Window>

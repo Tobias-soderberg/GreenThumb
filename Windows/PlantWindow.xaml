@@ -8,10 +8,7 @@
         Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF162C3A"/>
-                <GradientStop Color="#FF98A3A9" Offset="1"/>
-            </LinearGradientBrush>
+            <ImageBrush ImageSource="/Assets/Flower2.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
         <Grid.ColumnDefinitions>
@@ -42,7 +39,7 @@
             FontSize="40"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Foreground="#FF00794F"
+            Foreground="SaddleBrown"
         />
 
         <Label
@@ -54,7 +51,7 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Right"
             Padding="0"
-            Foreground="LightGoldenrodYellow"
+            Foreground="SaddleBrown"
             
             />
 
@@ -83,6 +80,7 @@
             <ListView.ItemContainerStyle> <!--sets the column text to center-->
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="LightGoldenrodYellow"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
@@ -145,7 +143,46 @@
                 </Style>
             </Button.Resources>
         </Button>
+        
+        <Button
+            Name="btnBack"
+            Grid.Column="4"
+            Grid.Row="5"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Go Back"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnBack_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
+        <Button
+            Name="btnMyGarden"
+            Grid.Column="1"
+            Grid.Row="5"
+            Margin="10,4"
+            Height="40"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="View My Garden"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold" Click="btnMyGarden_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
 
     </Grid>

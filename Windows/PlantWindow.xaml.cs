@@ -91,4 +91,18 @@ public partial class PlantWindow : Window
         plantDetailsWindow.Show();
         Close();
     }
+
+    private void btnBack_Click(object sender, RoutedEventArgs e)
+    {
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.Show();
+        Close();
+    }
+
+    private void btnMyGarden_Click(object sender, RoutedEventArgs e)
+    {
+        MyGardenWindow mainWindow = new MyGardenWindow();
+        mainWindow.Show();
+        Close();
+    }
 }

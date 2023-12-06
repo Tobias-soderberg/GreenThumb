@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Flower1.jpg" />
+    <None Remove="Assets\Flower2.jpg" />
+    <None Remove="Assets\Garden1.jpg" />
+    <None Remove="Assets\Garden2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="entityframeworkcore.encryptcolumn" Version="6.0.8" />
     <PackageReference Include="microsoft.entityframeworkcore" Version="6.0.25" />
     <PackageReference Include="microsoft.entityframeworkcore.design" Version="6.0.25">
@@ -20,6 +27,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Flower1.jpg" />
+    <Resource Include="Assets\Flower2.jpg" />
+    <Resource Include="Assets\Garden1.jpg" />
+    <Resource Include="Assets\Garden2.jpg" />
   </ItemGroup>
 
 </Project>

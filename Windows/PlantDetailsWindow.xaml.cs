@@ -1,4 +1,5 @@
 ﻿using GreenThumb.Database;
+using GreenThumb.Managers;
 using GreenThumb.Models;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,8 +44,8 @@ namespace GreenThumb.Windows
             btnUpdate.Visibility = Visibility.Visible;
             btnAddToGarden.Visibility = Visibility.Hidden;
             btnEditPlant.Visibility = Visibility.Hidden;
-            txtDescription.IsReadOnly = true;
-            txtPlantName.IsReadOnly = true;
+            txtDescription.IsReadOnly = false;
+            txtPlantName.IsReadOnly = false;
         }
 
         private void DisableEdit()
@@ -56,8 +57,8 @@ namespace GreenThumb.Windows
             btnUpdate.Visibility = Visibility.Hidden;
             btnAddToGarden.Visibility = Visibility.Visible;
             btnEditPlant.Visibility = Visibility.Visible;
-            txtDescription.IsReadOnly = false;
-            txtPlantName.IsReadOnly = false;
+            txtDescription.IsReadOnly = true;
+            txtPlantName.IsReadOnly = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -67,7 +68,35 @@ namespace GreenThumb.Windows
 
         private void btnAddToGarden_Click(object sender, RoutedEventArgs e)
         {
+            using (GreenThumbDbContext context = new())
+            {
+                GreenThumbRepository<GardenPlant> gpRepo = new(context);
+                GreenThumbRepository<GardenModel> gardenRepo = new(context);
 
+                GardenModel garden = gardenRepo.GetAllInclude("Plants").FirstOrDefault(g => g.UserId == UserManager.currentUser.UserId);
+
+                int gardenId = UserManager.currentUser.Garden.GardenId;
+                int plantId = _plant.PlantId;
+                GardenPlant? relation = gpRepo.GetAll().FirstOrDefault(r => r.GardenId == gardenId && r.PlantId == plantId);
+
+                if (relation == null)
+                {
+                    GardenPlant newRelation = new GardenPlant()
+                    {
+                        GardenId = UserManager.currentUser.Garden.GardenId,
+                        PlantId = _plant.PlantId,
+                        Quanity = 1
+                    };
+                    gpRepo.Add(newRelation);
+                }
+                else
+                {
+                    relation.Quanity = relation.Quanity + 1;
+                    gpRepo.Update(relation);
+                }
+                gpRepo.Complete();
+
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -123,12 +152,27 @@ namespace GreenThumb.Windows
 
         private void btnRemoveInstruction_Click(object sender, RoutedEventArgs e)
         {
-
+            if (lstInstructions.SelectedItem == null)
+            {
+                MessageBox.Show("No instruction selected!");
+                return;
+            }
+            lstInstructions.Items.Remove(lstInstructions.SelectedItem);
         }
 
         private void btnAddInstruction_Click(object sender, RoutedEventArgs e)
         {
+            string instruction = txtInstruction.Text.Trim();
+            if (string.IsNullOrEmpty(instruction))
+            {
+                MessageBox.Show("No instruction to add! Please make sure your instruction is entered");
+                return;
+            }
+            ListViewItem item = new ListViewItem();
+            item.Content = instruction;
+            lstInstructions.Items.Add(item);
 
+            txtInstruction.Text = string.Empty;
         }
     }
 }
