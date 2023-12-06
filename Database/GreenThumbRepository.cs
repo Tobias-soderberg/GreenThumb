@@ -18,6 +18,7 @@ internal class GreenThumbRepository<T> where T : class
         return _dbSet.ToList();
     }
 
+    //Send argument as one string for example "Garden.Plants" to include Users Garden and the Plants in it
     public List<T>? GetAllInclude(params string[] navigationProperties)
     {
         try

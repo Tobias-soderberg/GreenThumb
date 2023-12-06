@@ -46,6 +46,7 @@ namespace GreenThumb.Windows
             btnEditPlant.Visibility = Visibility.Hidden;
             txtDescription.IsReadOnly = false;
             txtPlantName.IsReadOnly = false;
+            txtImgUrl.IsReadOnly = false;
         }
 
         private void DisableEdit()
@@ -59,6 +60,7 @@ namespace GreenThumb.Windows
             btnEditPlant.Visibility = Visibility.Visible;
             txtDescription.IsReadOnly = true;
             txtPlantName.IsReadOnly = true;
+            txtImgUrl.IsReadOnly = true;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -101,17 +103,25 @@ namespace GreenThumb.Windows
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            DisableEdit();
+
             using (GreenThumbDbContext context = new())
             {
                 GreenThumbRepository<PlantModel> plantRepo = new(context);
                 GreenThumbRepository<InstructionModel> instructionRepo = new(context);
 
-                string plantName = txtPlantName.Text;
-                string description = txtDescription.Text;
+                string plantName = txtPlantName.Text.Trim();
+                string description = txtDescription.Text.Trim();
+                string imgUrl = txtImgUrl.Text.Trim();
 
                 _plant.Name = plantName;
                 _plant.Description = description;
+                _plant.ImgUrl = imgUrl;
+
+                if (!Uri.IsWellFormedUriString(imgUrl, UriKind.Absolute))
+                {
+                    MessageBox.Show("Image URL is not a valid Url");
+                    return;
+                }
 
                 foreach (var instuction in _plant.Instructions)
                 {
@@ -129,6 +139,7 @@ namespace GreenThumb.Windows
                 plantRepo.Update(_plant);
                 plantRepo.Complete();
             }
+            DisableEdit();
         }
 
         private void GoBack()
@@ -142,6 +153,7 @@ namespace GreenThumb.Windows
         {
             txtDescription.Text = plant.Description;
             txtPlantName.Text = plant.Name;
+            txtImgUrl.Text = plant.ImgUrl;
             foreach (InstructionModel instruction in plant.Instructions)
             {
                 ListViewItem item = new ListViewItem();

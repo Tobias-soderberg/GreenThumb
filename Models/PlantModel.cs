@@ -12,6 +12,8 @@ namespace GreenThumb.Models
         public string Name { get; set; } = null!;
         [Column("description")]
         public string? Description { get; set; }
+        [Column("img_url")]
+        public string? ImgUrl { get; set; }
         public List<InstructionModel> Instructions { get; set; } = new();
         public List<GardenModel> Gardens { get; set; } = new();
     }

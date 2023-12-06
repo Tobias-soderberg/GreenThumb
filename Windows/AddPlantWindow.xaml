@@ -52,7 +52,6 @@
             Foreground="LightGoldenrodYellow"
             FontSize="16"
             VerticalAlignment="Top"
-
             FontWeight="Bold"
             />
         <Label
@@ -79,6 +78,18 @@
             HorizontalAlignment="Center"
             />
 
+        <Label
+            Grid.Column="2"
+            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            Content="Img URL"
+            Foreground="LightGoldenrodYellow"
+            FontSize="16"
+            VerticalAlignment="Top"
+            FontWeight="Bold"
+            />
+        
         <Label
             Grid.Column="5"
             Grid.Row="4"
@@ -119,6 +130,18 @@
             Margin="0 30 0 0"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Auto"
+            Background="LightGoldenrodYellow"
+            />
+
+        <TextBox
+            Name="txtImgUrl"
+            Grid.Row="4"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
+            Height="30"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="10"
             Background="LightGoldenrodYellow"
             />
 
@@ -173,8 +196,8 @@
         <Button
             Name="btnAddPlant"
             Grid.Column="2"
-            Grid.ColumnSpan="2"
-            Grid.Row="4"
+            Grid.ColumnSpan="5"
+            Grid.Row="5"
             Margin="10,4"
             Height="40"
             Background="LightGoldenrodYellow"

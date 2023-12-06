@@ -1,4 +1,5 @@
 ﻿using GreenThumb.Database;
+using GreenThumb.Managers;
 using GreenThumb.Models;
 using System.Windows;
 using System.Windows.Controls;
@@ -94,6 +95,7 @@ public partial class PlantWindow : Window
 
     private void btnBack_Click(object sender, RoutedEventArgs e)
     {
+        UserManager.currentUser = null;
         MainWindow mainWindow = new MainWindow();
         mainWindow.Show();
         Close();

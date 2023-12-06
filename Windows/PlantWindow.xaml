@@ -81,6 +81,7 @@
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                    <Setter Property="Foreground" Value="#FF2C772C"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

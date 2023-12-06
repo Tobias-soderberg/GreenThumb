@@ -44,11 +44,20 @@ namespace GreenThumb.Windows
         private void btnAddPlant_Click(object sender, RoutedEventArgs e)
         {
             string plantName = txtPlantName.Text.Trim();
+            string imgUrl = txtImgUrl.Text.Trim();
             if (string.IsNullOrEmpty(plantName))
             {
                 MessageBox.Show("Plant needs to have a name!");
                 return;
             }
+            else
+
+            if (!string.IsNullOrEmpty(imgUrl) && !Uri.IsWellFormedUriString(imgUrl, UriKind.Absolute))
+            {
+                MessageBox.Show("Image URL is not a valid Url");
+                return;
+            }
+
             string plantDescription = txtDescription.Text.Trim();
             using (GreenThumbDbContext context = new())
             {
@@ -67,6 +76,7 @@ namespace GreenThumb.Windows
                     {
                         Name = plantName,
                         Description = plantDescription,
+                        ImgUrl = imgUrl,
                     };
                     plantRepo.Add(newPlant);
                     plantRepo.Complete();
@@ -76,8 +86,7 @@ namespace GreenThumb.Windows
                         InstructionModel newInstruction = new InstructionModel()
                         {
                             InstructionText = item.Content.ToString()!,
-                            PlantId = newPlant.PlantId
-
+                            PlantId = newPlant.PlantId,
                         };
                         newPlant.Instructions.Add(newInstruction);
                     }
@@ -105,6 +114,7 @@ namespace GreenThumb.Windows
             txtDescription.Text = string.Empty;
             txtInstruction.Text = string.Empty;
             txtPlantName.Text = string.Empty;
+            txtImgUrl.Text = string.Empty;
         }
     }
 }

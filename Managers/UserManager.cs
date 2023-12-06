@@ -2,6 +2,7 @@
 
 using GreenThumb.Database;
 using GreenThumb.Models;
+using System.Windows;
 
 namespace GreenThumb.Managers;
 
@@ -14,7 +15,7 @@ internal static class UserManager
         using (GreenThumbDbContext context = new())
         {
             GreenThumbRepository<UserModel> userRepo = new(context);
-            UserModel? userToLogin = userRepo.GetAllInclude("Garden").FirstOrDefault(u => u.Username == username);
+            UserModel? userToLogin = userRepo.GetAllInclude("Garden.Plants").FirstOrDefault(u => u.Username == username);
             if (userToLogin != null)
             {
                 if (userToLogin.Password == password)
@@ -23,6 +24,7 @@ internal static class UserManager
                     return true;
                 }
             }
+            MessageBox.Show("Wrong username or password!");
             return false;
         }
     }

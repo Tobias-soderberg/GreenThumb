@@ -34,29 +34,93 @@
             <RowDefinition />
             <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
-
-        <Grid
-            Name="gridGarden"
+        <Border
             Grid.Row="2"
             Grid.Column="2"
             Grid.ColumnSpan="5"
             Grid.RowSpan="4"
-            Background="Transparent"
+            BorderThickness="4"
             >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-        </Grid>
+            <Grid
+                Name="gridGarden"
+                Grid.Row="2"
+                Grid.Column="2"
+                Grid.ColumnSpan="5"
+                Grid.RowSpan="4"
+                Background="Transparent"
+                ShowGridLines="True"
+            
+                >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Rectangle
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.RowSpan="4"
+                    Grid.ColumnSpan="4"
+                
+                    />
+            </Grid>
+        </Border>
+
+        <Button
+            Name="btnRemove"
+            Grid.Column="7"
+            Grid.ColumnSpan="3"
+            Grid.Row="3"
+            Margin="10,4"
+            Height="30"
+            VerticalAlignment="Center"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Remove ONE Of This Plant"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold"
+            Visibility="Visible"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button
+            Name="btnRemoveAll"
+            Grid.Column="7"
+            Grid.ColumnSpan="3"
+            Grid.Row="4"
+            Margin="10,4"
+            Height="30"
+            VerticalAlignment="Center"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Remove ALL Of This Plant"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold"
+            Visibility="Visible"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <Button
             Name="btnBack"
