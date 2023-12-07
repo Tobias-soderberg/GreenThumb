@@ -15,19 +15,23 @@ namespace GreenThumb.Windows;
 public partial class MyGardenWindow : Window
 {
     private PlantModel selectedPlant;
+    private List<TextBlock> selectedTextBlocks = new();
     public MyGardenWindow()
     {
         InitializeComponent();
 
         DisplayPlants();
+
     }
 
     internal MyGardenWindow(PlantModel plant)
     {
         selectedPlant = plant;
+
         InitializeComponent();
 
         DisplayPlants();
+        SetSelectedText();
     }
 
     private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -92,7 +96,18 @@ public partial class MyGardenWindow : Window
                 }
 
 
-                //Create textblock
+                //Create textblocks
+
+                TextBlock nameTextBlock = new TextBlock
+                {
+                    Text = plant.Name, // Use the name property of the plant
+                    Foreground = Brushes.Black,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    FontWeight = FontWeights.Bold,
+                    Background = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)), //Set semi transparent background
+                };
+
                 GardenPlant relation = gpRepo.GetAll().FirstOrDefault(gp => gp.PlantId == plant.PlantId); //No need to check GardenId as we only have plants in the garden in plants list
                 TextBlock numberTextBlock = new TextBlock
                 {
@@ -105,9 +120,22 @@ public partial class MyGardenWindow : Window
                     VerticalAlignment = VerticalAlignment.Bottom
                 };
 
-                //Add to the cell grid
+                TextBlock selectionTextBlock = new TextBlock
+                {
+                    Text = "Selected",
+                    Foreground = Brushes.Green,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Visibility = Visibility.Hidden,
+                    Tag = plant,
+                };
 
+                selectedTextBlocks.Add(selectionTextBlock);
+
+                //Add them to the cell grid
+                cellGrid.Children.Add(nameTextBlock);
                 cellGrid.Children.Add(numberTextBlock);
+                cellGrid.Children.Add(selectionTextBlock);
 
                 //Add cellgrid to main one
                 gridGarden.Children.Add(cellGrid);
@@ -122,6 +150,7 @@ public partial class MyGardenWindow : Window
         {
             Grid clickedCell = (Grid)sender;
             selectedPlant = (PlantModel)clickedCell.Tag;
+            SetSelectedText();
         }
     }
 
@@ -132,7 +161,10 @@ public partial class MyGardenWindow : Window
             return;
         }
 
-        //ARE YOU SURE?
+        if (MessageBox.Show("Are you sure you want to remove all?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.No)
+        {
+            return;
+        }
 
         using (GreenThumbDbContext context = new())
         {
@@ -148,6 +180,7 @@ public partial class MyGardenWindow : Window
                 Close();
             }
         }
+        SetSelectedText();
     }
 
     private void btnRemoveOne_Click(object sender, RoutedEventArgs e)
@@ -164,6 +197,37 @@ public partial class MyGardenWindow : Window
             if (relation != null)
             {
                 relation.Quanity--;
+
+                gpRepo.Update(relation);
+                gpRepo.Complete();
+
+                if (relation.Quanity == 0)
+                {
+                    gpRepo.Delete(relation);
+                    gpRepo.Complete();
+                }
+
+                MyGardenWindow myGardenWindow = new MyGardenWindow(selectedPlant);
+                myGardenWindow.Show();
+                Close();
+            }
+        }
+    }
+    private void btnAddOne_Click(object sender, RoutedEventArgs e)
+    {
+        if (selectedPlant == null)
+        {
+            return;
+        }
+
+        using (GreenThumbDbContext context = new())
+        {
+            GreenThumbRepository<GardenPlant> gpRepo = new(context);
+            GardenPlant? relation = gpRepo.GetAll().FirstOrDefault(gp => gp.GardenId == UserManager.currentUser.Garden.GardenId && gp.PlantId == selectedPlant.PlantId);
+            if (relation != null)
+            {
+                relation.Quanity++;
+
                 gpRepo.Update(relation);
                 gpRepo.Complete();
 
@@ -173,4 +237,21 @@ public partial class MyGardenWindow : Window
             }
         }
     }
+
+    private void SetSelectedText()
+    {
+        foreach (var textBlock in selectedTextBlocks)
+        {
+            PlantModel plant = (PlantModel)textBlock.Tag;
+            if (plant.PlantId == selectedPlant.PlantId)
+            {
+                textBlock.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                textBlock.Visibility = Visibility.Hidden;
+            }
+        }
+    }
+
 }

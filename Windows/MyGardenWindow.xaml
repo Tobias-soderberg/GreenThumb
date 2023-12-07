@@ -77,6 +77,31 @@
         </Border>
 
         <Button
+            Name="btnAddOne"
+            Grid.Column="7"
+            Grid.ColumnSpan="3"
+            Grid.Row="2"
+            Margin="10,4"
+            Height="30"
+            VerticalAlignment="Center"
+            Background="LightGoldenrodYellow"
+            Foreground="#FF2C772C"
+            Content="Add One More Of Selected Plant"
+            BorderBrush="MintCream"
+            BorderThickness="2" 
+            FontWeight="Bold"
+            Visibility="Visible"
+            Click="btnAddOne_Click"
+            >
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        
+        
+        <Button
             Name="btnRemoveOne"
             Grid.Column="7"
             Grid.ColumnSpan="3"
@@ -86,7 +111,7 @@
             VerticalAlignment="Center"
             Background="LightGoldenrodYellow"
             Foreground="#FF2C772C"
-            Content="Remove ONE Of This Plant"
+            Content="Remove ONE Of Selected Plant"
             BorderBrush="MintCream"
             BorderThickness="2" 
             FontWeight="Bold"
@@ -109,7 +134,7 @@
             VerticalAlignment="Center"
             Background="LightGoldenrodYellow"
             Foreground="#FF2C772C"
-            Content="Remove ALL Of This Plant"
+            Content="Remove ALL Of Selected Plant"
             BorderBrush="MintCream"
             BorderThickness="2" 
             FontWeight="Bold"

@@ -97,7 +97,7 @@ namespace GreenThumb.Windows
                     gpRepo.Update(relation);
                 }
                 gpRepo.Complete();
-
+                MessageBox.Show($"One {_plant.Name} added to your garden!\n\nTIPS: If you want more of the same plant\n its easier to handle in the garden! :)");
             }
         }
 
@@ -140,6 +140,7 @@ namespace GreenThumb.Windows
                 plantRepo.Complete();
             }
             DisableEdit();
+            MessageBox.Show("Plant updated!");
         }
 
         private void GoBack()
