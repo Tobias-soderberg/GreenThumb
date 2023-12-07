@@ -55,9 +55,8 @@ internal class GreenThumbRepository<T> where T : class
         return;
     }
 
-    public void Delete(int id)
+    public void Delete(T entityToDelete)
     {
-        T? entityToDelete = Get(id);
         if (entityToDelete != null)
         {
             _dbSet.Remove(entityToDelete);

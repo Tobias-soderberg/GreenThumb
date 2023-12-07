@@ -125,7 +125,7 @@ namespace GreenThumb.Windows
 
                 foreach (var instuction in _plant.Instructions)
                 {
-                    instructionRepo.Delete(instuction.InstructionId);
+                    instructionRepo.Delete(instuction);
                 }
                 _plant.Instructions.Clear();
                 foreach (ListViewItem item in lstInstructions.Items)

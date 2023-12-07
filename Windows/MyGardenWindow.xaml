@@ -77,7 +77,7 @@
         </Border>
 
         <Button
-            Name="btnRemove"
+            Name="btnRemoveOne"
             Grid.Column="7"
             Grid.ColumnSpan="3"
             Grid.Row="3"
@@ -90,7 +90,7 @@
             BorderBrush="MintCream"
             BorderThickness="2" 
             FontWeight="Bold"
-            Visibility="Visible"
+            Visibility="Visible" Click="btnRemoveOne_Click"
             >
             <Button.Resources>
                 <Style TargetType="Border">
@@ -113,7 +113,7 @@
             BorderBrush="MintCream"
             BorderThickness="2" 
             FontWeight="Bold"
-            Visibility="Visible"
+            Visibility="Visible" Click="btnRemoveAll_Click"
             >
             <Button.Resources>
                 <Style TargetType="Border">

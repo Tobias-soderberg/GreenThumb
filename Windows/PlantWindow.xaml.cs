@@ -67,7 +67,7 @@ public partial class PlantWindow : Window
             GreenThumbRepository<PlantModel> plantRepo = new(context);
             try
             {
-                plantRepo.Delete(plantToRemove.PlantId);
+                plantRepo.Delete(plantToRemove);
                 plantRepo.Complete();
                 UpdatePlantList();
             }
