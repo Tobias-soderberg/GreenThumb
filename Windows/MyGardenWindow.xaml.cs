@@ -26,7 +26,12 @@ public partial class MyGardenWindow : Window
 
     internal MyGardenWindow(PlantModel plant)
     {
-        selectedPlant = plant;
+        using (GreenThumbDbContext context = new())
+        {
+            GreenThumbRepository<PlantModel> plantRepo = new(context);
+            selectedPlant = plantRepo.Get(plant.PlantId);
+        }
+
 
         InitializeComponent();
 
@@ -108,7 +113,7 @@ public partial class MyGardenWindow : Window
                     Background = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)), //Set semi transparent background
                 };
 
-                GardenPlant relation = gpRepo.GetAll().FirstOrDefault(gp => gp.PlantId == plant.PlantId); //No need to check GardenId as we only have plants in the garden in plants list
+                GardenPlant relation = gpRepo.GetAll().FirstOrDefault(gp => gp.PlantId == plant.PlantId && gp.GardenId == UserManager.currentUser.Garden.GardenId);
                 TextBlock numberTextBlock = new TextBlock
                 {
                     Text = relation.Quanity.ToString(), // Set Quantity of the plant
