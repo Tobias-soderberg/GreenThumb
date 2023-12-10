@@ -5,9 +5,10 @@ namespace GreenThumb.Managers
 {
     internal static class KeyManager
     {
+        //Returns the key as a string. If it doesnt exist it is created
         public static string getEncryptionKey()
         {
-            string keyLocation = "C:\\Users\\tobia\\Skrivbord\\Key.txt";
+            string keyLocation = Path.Combine(Directory.GetCurrentDirectory(), "Key.txt");
             string key;
             if (File.Exists(keyLocation))
             {
@@ -25,6 +26,8 @@ namespace GreenThumb.Managers
             }
             return key;
         }
+
+        //Generates a random key string
         private static string generateEncryptionKey()
         {
             var rng = new RNGCryptoServiceProvider();

@@ -17,11 +17,13 @@ public partial class PlantWindow : Window
         UpdatePlantList();
     }
 
+    //Runs everytime something changes in searchbox
     private void txtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
     {
         UpdatePlantList();
     }
 
+    //Updates list with the correct plants matching the search input
     private void UpdatePlantList()
     {
         string searchInput = txtSearch.Text;
@@ -36,7 +38,7 @@ public partial class PlantWindow : Window
             }
             foreach (var plant in plantList)
             {
-                if (plant.Name.ToLower().Contains(searchInput.ToLower()))
+                if (plant.Name.ToLower().Contains(searchInput.ToLower())) //Remove case sensitivity with ToLower()
                 {
                     ListViewItem item = new ListViewItem();
                     item.Tag = plant;
@@ -47,6 +49,7 @@ public partial class PlantWindow : Window
         }
     }
 
+    //Opens AddPlantWindow
     private void btnAddPlant_Click(object sender, RoutedEventArgs e)
     {
         AddPlantWindow addPlantWindow = new AddPlantWindow();
@@ -54,14 +57,22 @@ public partial class PlantWindow : Window
         Close();
     }
 
+    //Deletes the selected plant
     private void btnDelete_Click(object sender, RoutedEventArgs e)
     {
         if (lstPlants.SelectedItem == null)
         {
             return;
         }
+
         ListViewItem selectedItem = (ListViewItem)lstPlants.SelectedItem;
         PlantModel plantToRemove = (PlantModel)selectedItem.Tag;
+
+        if (MessageBox.Show($"Are you sure you want to remove {plantToRemove.Name}?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.No)
+        {
+            return;
+        }
+
         using (GreenThumbDbContext context = new())
         {
             GreenThumbRepository<PlantModel> plantRepo = new(context);
@@ -71,14 +82,15 @@ public partial class PlantWindow : Window
                 plantRepo.Complete();
                 UpdatePlantList();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show($"Could not delete that plant with id: {plantToRemove.PlantId}, please try again! If this keeps comming up please send to IT department :)");
+                MessageBox.Show($"Could not delete {plantToRemove}!\n\n" + ex.Message);
             }
 
         }
     }
 
+    //Opens detail of the selected plant
     private void btnDetails_Click(object sender, RoutedEventArgs e)
     {
         ListViewItem selectedItem = (ListViewItem)lstPlants.SelectedItem;
@@ -93,6 +105,7 @@ public partial class PlantWindow : Window
         Close();
     }
 
+    //Sets user to null and goes back to login screen
     private void btnBack_Click(object sender, RoutedEventArgs e)
     {
         UserManager.currentUser = null;
@@ -101,6 +114,7 @@ public partial class PlantWindow : Window
         Close();
     }
 
+    //Opens MyGardenWindow
     private void btnMyGarden_Click(object sender, RoutedEventArgs e)
     {
         MyGardenWindow mainWindow = new MyGardenWindow();

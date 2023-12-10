@@ -35,6 +35,8 @@ namespace GreenThumb.Database
             modelBuilder.UseEncryption(_provider);
 
             //Set Relations
+
+            //M:M relation between Plants and Garden
             modelBuilder.Entity<GardenModel>()
                 .HasMany(g => g.Plants)
                 .WithMany(p => p.Gardens)
@@ -49,18 +51,20 @@ namespace GreenThumb.Database
 
                 );
 
+            //On Delete relation between User and Garden
             modelBuilder.Entity<UserModel>()
                 .HasOne(g => g.Garden)
                 .WithOne(u => u.User)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
+            //On delete and ForeignKey between Plant and Instruction
             modelBuilder.Entity<PlantModel>()
                 .HasMany(plant => plant.Instructions)
                 .WithOne(ins => ins.Plant)
                 .HasForeignKey(ins => ins.PlantId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            //Define ForeignKey between User and Garden
             modelBuilder.Entity<UserModel>()
                 .HasOne(e => e.Garden)
                 .WithOne(e => e.User)
@@ -69,6 +73,7 @@ namespace GreenThumb.Database
 
             //SEED DATA
 
+            //Adding 5 plants to the program by default!
             modelBuilder.Entity<PlantModel>()
                 .HasData(
                 new PlantModel()

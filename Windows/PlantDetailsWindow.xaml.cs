@@ -11,7 +11,7 @@ namespace GreenThumb.Windows
     /// </summary>
     public partial class PlantDetailsWindow : Window
     {
-        private PlantModel? _plant;
+        private PlantModel? _plant; //Plant that is shown details of
         public PlantDetailsWindow(int plantId)
         {
             InitializeComponent();
@@ -19,7 +19,7 @@ namespace GreenThumb.Windows
             using (GreenThumbDbContext context = new())
             {
                 GreenThumbRepository<PlantModel> plantRepo = new(context);
-                _plant = plantRepo.GetAllInclude("Instructions").FirstOrDefault(p => p.PlantId == plantId);
+                _plant = plantRepo.GetAllInclude("Instructions").FirstOrDefault(p => p.PlantId == plantId); //Get plant with instructions
                 if (_plant == null)
                 {
                     MessageBox.Show("The Id that PlantDetailsWindow got does not exist in the database!");
@@ -35,6 +35,7 @@ namespace GreenThumb.Windows
             EnableEdit();
         }
 
+        //Enables the edit functionallity in UI
         private void EnableEdit()
         {
             lblInstruction.Visibility = Visibility.Visible;
@@ -49,6 +50,7 @@ namespace GreenThumb.Windows
             txtImgUrl.IsReadOnly = false;
         }
 
+        //Disables the edit functionallity in UI
         private void DisableEdit()
         {
             lblInstruction.Visibility = Visibility.Hidden;
@@ -68,6 +70,7 @@ namespace GreenThumb.Windows
             GoBack();
         }
 
+        //Creates a new plant to add to the garden or adds one more to the exisiting plant
         private void btnAddToGarden_Click(object sender, RoutedEventArgs e)
         {
             using (GreenThumbDbContext context = new())
@@ -75,14 +78,13 @@ namespace GreenThumb.Windows
                 GreenThumbRepository<GardenPlant> gpRepo = new(context);
                 GreenThumbRepository<GardenModel> gardenRepo = new(context);
 
-                GardenModel garden = gardenRepo.GetAllInclude("Plants").FirstOrDefault(g => g.UserId == UserManager.currentUser.UserId);
-
                 int gardenId = UserManager.currentUser.Garden.GardenId;
                 int plantId = _plant.PlantId;
                 GardenPlant? relation = gpRepo.GetAll().FirstOrDefault(r => r.GardenId == gardenId && r.PlantId == plantId);
 
                 if (relation == null)
                 {
+                    //Create new relation with 1 quantity
                     GardenPlant newRelation = new GardenPlant()
                     {
                         GardenId = UserManager.currentUser.Garden.GardenId,
@@ -93,6 +95,7 @@ namespace GreenThumb.Windows
                 }
                 else
                 {
+                    //Relation already exists, add one to the quantity property
                     relation.Quanity = relation.Quanity + 1;
                     gpRepo.Update(relation);
                 }
@@ -101,6 +104,7 @@ namespace GreenThumb.Windows
             }
         }
 
+        //Saves the new changes to the active plant (_plant)
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
 
@@ -117,7 +121,7 @@ namespace GreenThumb.Windows
                 _plant.Description = description;
                 _plant.ImgUrl = imgUrl;
 
-                if (!Uri.IsWellFormedUriString(imgUrl, UriKind.Absolute))
+                if (!Uri.IsWellFormedUriString(imgUrl, UriKind.Absolute)) //Can be a website URL that is not an image
                 {
                     MessageBox.Show("Image URL is not a valid Url");
                     return;
@@ -125,11 +129,13 @@ namespace GreenThumb.Windows
 
                 foreach (var instuction in _plant.Instructions)
                 {
+                    //Remove all instructions
                     instructionRepo.Delete(instuction);
                 }
                 _plant.Instructions.Clear();
                 foreach (ListViewItem item in lstInstructions.Items)
                 {
+                    //Add all the new instructions
                     _plant.Instructions.Add(new InstructionModel()
                     {
                         InstructionText = (string)item.Content,
@@ -143,6 +149,7 @@ namespace GreenThumb.Windows
             MessageBox.Show("Plant updated!");
         }
 
+        //Goes back to the PlantWindow
         private void GoBack()
         {
             PlantWindow plantWindow = new PlantWindow();
@@ -150,6 +157,7 @@ namespace GreenThumb.Windows
             Close();
         }
 
+        //Sets the textBoxes to correct information
         private void SetDetails(PlantModel plant)
         {
             txtDescription.Text = plant.Description;
@@ -163,6 +171,7 @@ namespace GreenThumb.Windows
             }
         }
 
+        //Removes selected item from ListView
         private void btnRemoveInstruction_Click(object sender, RoutedEventArgs e)
         {
             if (lstInstructions.SelectedItem == null)
@@ -173,6 +182,7 @@ namespace GreenThumb.Windows
             lstInstructions.Items.Remove(lstInstructions.SelectedItem);
         }
 
+        //Adds instruction to the ListView as a string in .Content
         private void btnAddInstruction_Click(object sender, RoutedEventArgs e)
         {
             string instruction = txtInstruction.Text.Trim();

@@ -26,10 +26,12 @@ public partial class MyGardenWindow : Window
 
     internal MyGardenWindow(PlantModel plant)
     {
+
+        //If we get plant as argument to constructor we set it to the selectedPlant.
         using (GreenThumbDbContext context = new())
         {
             GreenThumbRepository<PlantModel> plantRepo = new(context);
-            selectedPlant = plantRepo.Get(plant.PlantId);
+            selectedPlant = plantRepo.Get(plant.PlantId); //Using get from ID as if I only did selectedPlant = plant, it could be an "old" plant and not the current one we want to have
         }
 
 
@@ -46,6 +48,7 @@ public partial class MyGardenWindow : Window
         Close();
     }
 
+    //Displays all the plants the user have in their garden
     private void DisplayPlants()
     {
         using (GreenThumbDbContext context = new())
@@ -72,7 +75,7 @@ public partial class MyGardenWindow : Window
 
                 Grid cellGrid = new Grid();
 
-                //Calculate and set where in the grid to set flowers
+                //Calculate and set where in the grid to set flowers (Grid is 5x5)
                 int row = counter / 5;
                 int col = counter % 5;
 
@@ -81,6 +84,7 @@ public partial class MyGardenWindow : Window
                 cellGrid.MouseLeftButtonDown += CellGrid_Clicked; //Assign method "CellGrid_Clicked to eventhandler
                 cellGrid.Tag = plant;
 
+                //Create image if URL is not empty
                 if (!string.IsNullOrEmpty(imgUrlString))
                 {
                     //Create Image with url from plant
@@ -92,7 +96,7 @@ public partial class MyGardenWindow : Window
                 }
                 else
                 {
-                    //Create Image with standard image
+                    //If URL is empty we create Image with standard image
                     Image img = new Image { };
                     BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/GreenThumb;component/assets/SadPlant.jpg"));
                     img.Source = bitmapImage;
@@ -113,7 +117,7 @@ public partial class MyGardenWindow : Window
                     Background = new SolidColorBrush(Color.FromArgb(120, 255, 255, 255)), //Set semi transparent background
                 };
 
-                GardenPlant relation = gpRepo.GetAll().FirstOrDefault(gp => gp.PlantId == plant.PlantId && gp.GardenId == UserManager.currentUser.Garden.GardenId);
+                GardenPlant relation = gpRepo.GetAll().FirstOrDefault(gp => gp.PlantId == plant.PlantId && gp.GardenId == UserManager.currentUser.Garden.GardenId); //Get relation to access Quantity
                 TextBlock numberTextBlock = new TextBlock
                 {
                     Text = relation.Quanity.ToString(), // Set Quantity of the plant
@@ -132,23 +136,25 @@ public partial class MyGardenWindow : Window
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                     Visibility = Visibility.Hidden,
-                    Tag = plant,
+                    Tag = plant, //Set the Tag, used in knowing which textBlock to be visible
                 };
 
-                selectedTextBlocks.Add(selectionTextBlock);
+                selectedTextBlocks.Add(selectionTextBlock); //Add to list of all the "Selected" textBlocks, used in knowing which textBlock to be visible
 
                 //Add them to the cell grid
                 cellGrid.Children.Add(nameTextBlock);
                 cellGrid.Children.Add(numberTextBlock);
                 cellGrid.Children.Add(selectionTextBlock);
 
-                //Add cellgrid to main one
+                //Add cellgrid to "main" grid
                 gridGarden.Children.Add(cellGrid);
 
-                counter++;
+                counter++; //Add counter to change to next place in grid
             }
         }
     }
+
+    //Sets the selected text when clicking on a CellGrid
     private void CellGrid_Clicked(object sender, MouseButtonEventArgs e)
     {
         if (sender is Grid cellgrid && cellgrid.Tag is PlantModel)
@@ -159,6 +165,7 @@ public partial class MyGardenWindow : Window
         }
     }
 
+    //Deletes relation between the selected plant and the garden we are in
     private void btnRemoveAll_Click(object sender, RoutedEventArgs e)
     {
         if (selectedPlant == null)
@@ -166,6 +173,7 @@ public partial class MyGardenWindow : Window
             return;
         }
 
+        //Confirm removal of all plants
         if (MessageBox.Show("Are you sure you want to remove all?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.No)
         {
             return;
@@ -173,6 +181,7 @@ public partial class MyGardenWindow : Window
 
         using (GreenThumbDbContext context = new())
         {
+            //Get relation and remove it.
             GreenThumbRepository<GardenPlant> gpRepo = new(context);
             GardenPlant? relation = gpRepo.GetAll().FirstOrDefault(gp => gp.GardenId == UserManager.currentUser.Garden.GardenId && gp.PlantId == selectedPlant.PlantId);
             if (relation != null)
@@ -188,6 +197,7 @@ public partial class MyGardenWindow : Window
         SetSelectedText();
     }
 
+    //Lowers the quantity of selected plant by 1
     private void btnRemoveOne_Click(object sender, RoutedEventArgs e)
     {
         if (selectedPlant == null)
@@ -206,7 +216,7 @@ public partial class MyGardenWindow : Window
                 gpRepo.Update(relation);
                 gpRepo.Complete();
 
-                if (relation.Quanity == 0)
+                if (relation.Quanity == 0) //Delete relation if quantity is 0
                 {
                     gpRepo.Delete(relation);
                     gpRepo.Complete();
@@ -218,6 +228,7 @@ public partial class MyGardenWindow : Window
             }
         }
     }
+    //Adds to the quantity of selected plant by 1
     private void btnAddOne_Click(object sender, RoutedEventArgs e)
     {
         if (selectedPlant == null)
@@ -243,6 +254,7 @@ public partial class MyGardenWindow : Window
         }
     }
 
+    //Sets the selectedText over the plant that is the "selectedPlant" using the Tag put on the textBlock
     private void SetSelectedText()
     {
         foreach (var textBlock in selectedTextBlocks)

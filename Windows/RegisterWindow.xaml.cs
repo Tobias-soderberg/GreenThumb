@@ -21,7 +21,7 @@ namespace GreenThumb.Windows
             string password = txtPassword.Password.ToString().Trim();
             if (!UserManager.ValidateUserRegistration(username, password))
             {
-                MessageBox.Show("Not a valid username or password\n\nUsername must be 3 letters long\nPassword must be 5 letters long");
+                MessageBox.Show("Not a valid username or password!\n\n* Username must be 3 letters long\n* Password must be 5 letters long");
                 return;
             }
             using (GreenThumbDbContext context = new())
@@ -29,7 +29,7 @@ namespace GreenThumb.Windows
                 GreenThumbRepository<UserModel> userRepo = new(context);
                 if (userRepo.GetAll().FirstOrDefault(u => u.Username == username) == null)
                 {
-                    //User doesnt exist
+                    //User doesnt exist, create a new one and a new GardenModel with it
                     UserModel user = new()
                     {
                         Username = username,
@@ -50,6 +50,7 @@ namespace GreenThumb.Windows
             }
         }
 
+        //Opens MainWindow, (Login window)
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();

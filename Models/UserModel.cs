@@ -2,18 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GreenThumb.Models
+namespace GreenThumb.Models;
+
+internal class UserModel
 {
-    internal class UserModel
-    {
-        [Key]
-        [Column("id")]
-        public int UserId { get; set; }
-        [Column("username")]
-        public string Username { get; set; } = null!;
-        [EncryptColumn]
-        [Column("password")]
-        public string Password { get; set; } = null!;
-        public GardenModel Garden { get; set; } = null!;
-    }
+    [Key]
+    [Column("id")]
+    public int UserId { get; set; }
+    [Column("username")]
+    public string Username { get; set; } = null!;
+    [EncryptColumn]
+    [Column("password")]
+    public string Password { get; set; } = null!;
+    public GardenModel Garden { get; set; } = null!;
 }

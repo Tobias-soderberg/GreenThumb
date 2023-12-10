@@ -34,47 +34,32 @@
             <RowDefinition />
             <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
-        <Border
+
+        <Grid
+            Name="gridGarden"
             Grid.Row="2"
             Grid.Column="2"
             Grid.ColumnSpan="5"
             Grid.RowSpan="4"
-            BorderThickness="4"
+            Background="Transparent"
+            ShowGridLines="True"
             >
-            <Grid
-                Name="gridGarden"
-                Grid.Row="2"
-                Grid.Column="2"
-                Grid.ColumnSpan="5"
-                Grid.RowSpan="4"
-                Background="Transparent"
-                ShowGridLines="True"
-            
-                >
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Rectangle
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.RowSpan="4"
-                    Grid.ColumnSpan="4"
-                
-                    />
-            </Grid>
-        </Border>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        </Grid>
 
         <Button
             Name="btnAddOne"

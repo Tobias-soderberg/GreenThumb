@@ -18,7 +18,7 @@ internal class GreenThumbRepository<T> where T : class
         return _dbSet.ToList();
     }
 
-    //Send argument as one string for example "Garden.Plants" to include Users Garden and the Plants in it
+    //Send argument as a string for example "Garden.Plants" to include Users Garden and the Plants in it
     public List<T>? GetAllInclude(params string[] navigationProperties)
     {
         try
@@ -50,7 +50,7 @@ internal class GreenThumbRepository<T> where T : class
 
     public void Update(T entity)
     {
-        _context.Attach(entity);
+        _context.Attach(entity); //Attach to the context to make the program look at the object for changes and update if there are any
         _dbSet.Update(entity);
         return;
     }
